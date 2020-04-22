@@ -59,16 +59,13 @@ class Categorie_rCore {
 	
 	function modifierCategorie_r($categorie_r, $objet){
 		$sql="UPDATE categorie_r SET objet=:objetn, modetraitement=:modetraitement WHERE objet=:objet"; 
-		//var_dump($sql);
 		
 		$db = config::getConnexion();
 		try{		
 			$req=$db->prepare($sql);
 			$objetn=$categorie_r->getObjet();
 			$modetraitement=$categorie_r->getModetraitement();
-
-		
-
+			
 			$req->bindValue(':objet',$objet);
 			
 			$datas = array(':objetn'=>$objetn, ':objet'=>$objet, ':modetraitement'=>$modetraitement);
@@ -76,11 +73,9 @@ class Categorie_rCore {
 			
 			$req->bindValue(':modetraitement',$modetraitement); 
 
-			//var_dump($req);
-
-		
 			$req->execute();
-			echo $req->rowCount() . " records UPDATED successfully";
+			
+			header('Location: afficherlistecategories_r.php');
 			
 		}
 		catch (PDOException $e){
